@@ -9,13 +9,13 @@ import os,sys
 import playsound
 from threading import *
 
-def goto_signup_clicked(destroy_this_window,kill_this_thread):
+def goto_signup_clicked(destroy_this_window,kill_this_thread): #toggle from login to signup
     destroy_this_window.destroy()
     sign=Tk()
     sign.title("SignUp")
-    sign.geometry("500x650") #300x200
+    sign.geometry("500x700") #300x200
     sign.config(background = "black", pady=10)
-    load = Image.open("C:/gui/spurpenguin1.jpeg")
+    load = Image.open("spurpenguin1.jpeg")
     render = ImageTk.PhotoImage(load)
     img = Label(sign, image=render)
     img.image = render
@@ -26,7 +26,7 @@ def goto_signup_clicked(destroy_this_window,kill_this_thread):
     clock.place(x = 350, y = 5)
 
     # tick()
-    kill_this_thread=Thread(target=ticksmall)
+    kill_this_thread=Thread(target=ticksmall)       #clock in a new thread uneffected during main process execution
     kill_this_thread.start()
 
     lbs = Label(sign, text = "SignUp", bg = "black", fg="white", font=20)
@@ -43,7 +43,7 @@ def goto_signup_clicked(destroy_this_window,kill_this_thread):
     lb2_ps.place(x=110, y=80)
     lb2_ps2.place(x=210,y=80)
    
-    def reg():
+    def reg():                      # register function to register new user
         username = lb2_s2.get()
         pas = lb2_ps2.get()
         file =  open("username.txt","a")
@@ -78,7 +78,7 @@ def goto_signup_clicked(destroy_this_window,kill_this_thread):
     bts3.place(x=290, y=120)
     dis.place(x=100, y=150)
 
-def dis():
+def dis():                      # login to authenticate user
     user = lb2_u2.get()
     pas = lb2_p2.get()
     filo1 = open('username.txt').readlines()
@@ -103,13 +103,13 @@ def dis():
     lb2_p2.delete(0,END)
 
 
-def createframelogin(s,destroy_this_window):
+def createframelogin(s,destroy_this_window):    # basic frame creation
     destroy_this_window.destroy()
     window=Tk()
     window.title(s)
-    window.geometry("500x650")   #300x200
+    window.geometry("500x700")   #300x200
     window.config(background = "black", pady=10)
-    load = Image.open("C:/gui/spurpenguin1.jpeg")
+    load = Image.open("spurpenguin1.jpeg")
     render = ImageTk.PhotoImage(load)
     img = Label(window, image=render)
     img.image = render
@@ -147,9 +147,9 @@ def createframelogin(s,destroy_this_window):
     bt.config(command=dis)
     bt2 = Button(window, text="Go to SignUp",command=lambda:goto_signup_clicked(window,tt1))
     bt2.place(x=270, y=120)
-
     return window
-class noneclass:
+    
+class noneclass:        # an empty class just to wrap the main application in function
     def destroy(self):
         pass
     pass
@@ -157,24 +157,24 @@ class noneclass:
 def createframe(s):
     window=Tk()
     window.title(s)
-    window.geometry("500x650")
+    window.geometry("500x700")
     window.config(background = "black", pady=10)
     return window
-def tick():
+def tick():             # basic clock placement label
     time_string = time.strftime("%H:%M:%S")
     clock.config(text="Current time:- "+time_string)
     clock.after(1000, tick)
-def ticksmall():
+def ticksmall():        # basic clock placement label for login and register page
     time_string = time.strftime("%H:%M:%S")
-    clock.config(text="Current time:- \n"+time_string)
+    clock.config(text="Current time:- "+time_string)
     clock.after(1000, ticksmall)
 
-def start_thread(hr_start,min_start,hr_end,min_end,_goal,hrstart,hrend,minstart,minend,goal,user):
+def start_thread(hr_start,min_start,hr_end,min_end,_goal,hrstart,hrend,minstart,minend,goal,user):  #to run the process in thread so that there is not "not responding error"
     t2=Thread(target=hclicked,args=(hr_start,min_start,hr_end,min_end,_goal,hrstart,hrend,minstart,minend,goal,user,))
     t2.start()
 
 
-def hclicked(hr_start,min_start,hr_end,min_end,_goal,hrstart,hrend,minstart,minend,goal,user):
+def hclicked(hr_start,min_start,hr_end,min_end,_goal,hrstart,hrend,minstart,minend,goal,user):  #goal is loggerd into the system
     
     hrstart.delete(0,END)
     hrend.delete(0,END)
@@ -195,7 +195,6 @@ def hclicked(hr_start,min_start,hr_end,min_end,_goal,hrstart,hrend,minstart,mine
     total_timespan=((int(hr_end)-int(hr_start))*60)+(int(min_end)-int(min_start))
     
     filo1 = open('username.txt').readlines()
-    # filo2 = open('password.txt').readlines()
     filo3 = open('score.txt').readlines()
     
     for inter in range(0,len(filo1)):
@@ -219,12 +218,6 @@ def hclicked(hr_start,min_start,hr_end,min_end,_goal,hrstart,hrend,minstart,mine
     while (Actual_Time != Set_Alarm): 
         print ("The time is " + Actual_Time) 
         Actual_Time = time.strftime("%H:%M:%S") 
-        # style = ttk.Style()
-        # style.theme_use('default')
-        # style.configure("black.Horizontal.TProgressbar", background='green')
-        # bar = Progressbar(Start_window, length=220, style='black.Horizontal.TProgressbar')
-        # bar['value'] = 80
-        # bar.grid(column= 60, row=50)
         time.sleep(1)
     if (Actual_Time == Set_Alarm): 
         playsound.playsound("start.mp3",True)
@@ -245,7 +238,6 @@ def hclicked(hr_start,min_start,hr_end,min_end,_goal,hrstart,hrend,minstart,mine
         bar = Progressbar(Start_window, length=220, style='black.Horizontal.TProgressbar')
         bar['value'] = k
         print("value of k->"+str(k)+"total timespan->"+str(total_timespan)+"currrent timespan->"+str(current_timespan)+"cur_hr,cur_min->"+str(cur_hr)+" "+str(cur_min))
-        # bar.grid(column= 60, row=50)
         bar.place(x= 150, y=300)
         time.sleep(1)
     if (Actual_Time_end == Set_Alarm_end): 
@@ -282,7 +274,6 @@ def run_mainframe(user):
     clock=Label(Start_window, font=("times", 15), bg= "black",fg="white")
     clock.place(x = 300, y = 5)
 
-    # tick()
     t1=Thread(target=tick)
     t1.start()
 
