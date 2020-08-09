@@ -1,4 +1,5 @@
 # Spurr-App-
+(Reminder App for desktop)
 ## Link to screencast--> https://youtu.be/qXWxDTRI3vQ
 
 
